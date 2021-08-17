@@ -1,5 +1,5 @@
 let cells = document.querySelectorAll(".cell");
-let game = document.querySelector("#game");
+let game = document.querySelector("body");
 let randomValues = [2,4];
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
@@ -30,7 +30,16 @@ function fillBoard(){
 	}
 }
 
-board[hasardPosition()] = hasardValue();
-board[hasardPosition()] = hasardValue();
-fillBoard();
+function newPlay(){
+	board[hasardPosition()] = hasardValue();
+	fillBoard();
+}
 
+board[hasardPosition()] = hasardValue();
+newPlay();
+
+game.addEventListener( "keyup", evt=> {
+	if(evt.key === "ArrowUp"){
+		newPlay();	
+	};
+});
