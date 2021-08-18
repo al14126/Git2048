@@ -42,6 +42,7 @@ function hasardValue(){
 
 function fillBoard(){
 	for (let i = 0; i < cells.length; i++){
+		cells[i].className = "cell"
 		addClass(board[i],i);
 		if(board[i]!==0){
 			cells[i].innerHTML = board[i];
@@ -94,9 +95,7 @@ function addClass(number, position){
 				cells[position].classList.add('class2048');
 				break;
 		default:
-			cells[position].classList.add('classBigger2048');		
-			
-			
+			cells[position].classList.add('classBigger2048');				
 	} 
 }
 
@@ -238,7 +237,7 @@ game.addEventListener( "keyup", evt=> {
 				nextPositionEqual = true;
 				i = 12;
 			}
-		};
+		}
 		if(!nextPositionEqual){
 			for(let i = 0; i < 16; i++){
 				if((board[i]===board[i+1]) && ((i % 4)!==3)){
@@ -246,7 +245,7 @@ game.addEventListener( "keyup", evt=> {
 					i = 16;
 				}
 			}
-		};
+		}
 		if(!nextPositionEqual){
 			if(!winner){
 				gameEnd.innerHTML="Game Over";
@@ -255,8 +254,8 @@ game.addEventListener( "keyup", evt=> {
 			}
 			
 			return;
-		};
-	};
+		}
+	}
 
 	if(evt.key === "ArrowUp"){
 		fillColumns();
@@ -265,27 +264,21 @@ game.addEventListener( "keyup", evt=> {
 		upLeft(aux3);
 		upLeft(aux4);
 		copyBoardColumns();	
-	};
-
-	if(evt.key === "ArrowDown"){
+	} else if(evt.key === "ArrowDown"){
 		fillColumns();
 		downRight(aux1);
 		downRight(aux2);
 		downRight(aux3);
 		downRight(aux4);
 		copyBoardColumns();		
-	};
-
-	if(evt.key === "ArrowRight"){
+	} else if(evt.key === "ArrowRight"){
 		fillRows();
 		downRight(aux1);
 		downRight(aux2);
 		downRight(aux3);
 		downRight(aux4);
 		copyBoardRows();		
-	};
-
-	if(evt.key === "ArrowLeft"){
+	} else if(evt.key === "ArrowLeft"){
 		fillRows();
 		upLeft(aux1);
 		upLeft(aux2);
@@ -293,8 +286,9 @@ game.addEventListener( "keyup", evt=> {
 		upLeft(aux4);
 		copyBoardRows();		
 		
-	};
-
+	} else {
+		return;
+	}
 	if(maxValue === 2048){
 		gameEnd.innerHTML="Winner!!!";
 		winner = true;		
