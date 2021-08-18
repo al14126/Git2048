@@ -15,7 +15,9 @@ let winner = false;
 let score = 0;	
 
 function arraysAreIdentical(arr1, arr2){
-    if (arr1.length !== arr2.length) return false;
+    if (arr1.length !== arr2.length){
+		return false;
+	} 
     for (var i = 0, len = arr1.length; i < len; i++){
         if (arr1[i] !== arr2[i]){
             return false;
@@ -23,7 +25,6 @@ function arraysAreIdentical(arr1, arr2){
     }
     return true; 
 }
-
 
 function hasardPosition(){
 	let aux = [];
@@ -42,7 +43,7 @@ function hasardValue(){
 
 function fillBoard(){
 	for (let i = 0; i < cells.length; i++){
-		cells[i].className = "cell"
+		cells[i].className = "cell";
 		addClass(board[i],i);
 		if(board[i]!==0){
 			cells[i].innerHTML = board[i];
@@ -146,7 +147,7 @@ function upLeft (aux){
 				}
 			}
 		}
-	};
+	}
 	for(let i = 0; i<3; i++){
 		if(aux[i]===0){
 			for (let j = i+1; j<4; j++){
@@ -157,7 +158,7 @@ function upLeft (aux){
 				}
 			}
 		}
-	};
+	}
 	
 }
 
@@ -180,7 +181,7 @@ function downRight(aux){
 				}
 			}
 		}
-	};
+	}
 	for(let i = 3; i>0; i--){
 		if(aux[i] === 0){
 			for(let j = i-1 ; j>=0 ; j--){
@@ -191,23 +192,22 @@ function downRight(aux){
 				}
 			}
 		}
-	};
-	
+	}	
 }
 
 function copyBoardRows(){
 	for(let val of aux1){
 		copyBoard.push(val);
-	};
+	}
 	for(let val of aux2){
 		copyBoard.push(val);
-	};
+	}
 	for(let val of aux3){
 		copyBoard.push(val);
-	};
+	}
 	for(let val of aux4){
 		copyBoard.push(val);
-	};
+	}
 }
 
 function copyBoardColumns(){
@@ -219,11 +219,9 @@ function copyBoardColumns(){
 	}	
 }
 
-
 newPlay();
 newPlay();
 fillBoard();
-
 game.addEventListener( "keyup", evt=> {
 	aux1 = [];
 	aux2 = [];
@@ -251,8 +249,7 @@ game.addEventListener( "keyup", evt=> {
 				gameEnd.innerHTML="Game Over";
 			} else {
 				gameEnd.innerHTML="No more moves";
-			}
-			
+			}			
 			return;
 		}
 	}
@@ -285,10 +282,10 @@ game.addEventListener( "keyup", evt=> {
 		upLeft(aux3);
 		upLeft(aux4);
 		copyBoardRows();		
-		
 	} else {
 		return;
 	}
+	
 	if(maxValue === 2048){
 		gameEnd.innerHTML="Winner!!!";
 		winner = true;		
