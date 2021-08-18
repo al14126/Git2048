@@ -1,16 +1,18 @@
 let cells = document.querySelectorAll(".cell");
 let game = document.querySelector("body");
+let gameEnd = document.querySelector("#gameEnd");
+let writeScore = document.querySelector("#score");
 let randomValues = [2,4];
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let randomPosition;
-let gameEnd = document.querySelector("#gameEnd");
 let aux1 =[];
 let aux2 =[];
 let aux3 =[];
 let aux4 =[];	
 let copyBoard = [];
 let maxValue = 0;
-let winner = false;	
+let winner = false;
+let score = 0;	
 
 function arraysAreIdentical(arr1, arr2){
     if (arr1.length !== arr2.length) return false;
@@ -86,6 +88,7 @@ function upLeft (aux){
 			for(let j = i+1; j<4; j++){
 				if(aux[j]!==0){
 					if(aux[i]===aux[j]){
+						score += aux[j];
 						aux[i] += aux[j];
 						if(aux[i] > maxValue){
 							maxValue = aux[i];
@@ -119,6 +122,7 @@ function downRight(aux){
 			for(let j = i-1; j>=0; j--){
 				if(aux[j]!==0){
 					if(aux[i]===aux[j]){
+						score += aux[j];
 						aux[i] += aux[j];
 						if(aux[i] > maxValue){
 							maxValue = aux[i];
@@ -180,7 +184,7 @@ game.addEventListener( "keyup", evt=> {
 	aux2 = [];
 	aux3 = [];
 	aux4 = [];
-	copyBoard = [];
+	copyBoard = [];	
 	if(board.indexOf(0) == -1){
 		let nextPositionEqual = false;
 		for(let i = 0; i < 12; i++){
@@ -254,6 +258,7 @@ game.addEventListener( "keyup", evt=> {
 			board[i]=copyBoard[i];
 		}
 		newPlay();
-		fillBoard();			
+		fillBoard();
+		writeScore.innerHTML = score;			
 	}
 });
