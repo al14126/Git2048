@@ -42,6 +42,7 @@ function hasardValue(){
 
 function fillBoard(){
 	for (let i = 0; i < cells.length; i++){
+		addClass(board[i],i);
 		if(board[i]!==0){
 			cells[i].innerHTML = board[i];
 		} else{
@@ -52,6 +53,51 @@ function fillBoard(){
 
 function newPlay(){	
 	board[hasardPosition()] = hasardValue();	
+}
+
+function addClass(number, position){
+	switch (number){
+		case 0:
+			cells[position].classList.add('class0');
+			break;			
+		case 2:
+			cells[position].classList.add('class2');
+			break;
+		case 4: 
+			cells[position].classList.add('class4');
+			break;
+		case 8: 
+			cells[position].classList.add('class8');
+			break;	
+		case 16:
+				cells[position].classList.add('class16');
+				break;
+		case 32: 
+				cells[position].classList.add('class32');
+				break;
+		case 64: 
+				cells[position].classList.add('class64');
+				break;
+		case 128:
+			cells[position].classList.add('class128');
+			break;
+		case 256: 
+			cells[position].classList.add('class256');
+			break;
+		case 512: 
+			cells[position].classList.add('class512');
+			break;
+		case 1024:
+				cells[position].classList.add('class1024');
+				break;
+		case 2048: 
+				cells[position].classList.add('class2048');
+				break;
+		default:
+			cells[position].classList.add('class>2048');		
+			
+			
+	} 
 }
 
 function fillRows(){
