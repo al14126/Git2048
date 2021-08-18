@@ -81,6 +81,22 @@ function fillColumns(){
 }
 
 function upLeft (aux){
+	for(let i = 0; i<3 ; i++){
+		if(aux[i]!==0){
+			for(let j = i+1; j<4; j++){
+				if(aux[j]!==0){
+					if(aux[i]===aux[j]){
+						aux[i] += aux[j];
+						if(aux[i] > maxValue){
+							maxValue = aux[i];
+						}
+						aux[j] = 0;
+						j = 4;
+					}
+				}
+			}
+		}
+	};
 	for(let i = 0; i<3; i++){
 		if(aux[i]===0){
 			for (let j = i+1; j<4; j++){
@@ -91,30 +107,27 @@ function upLeft (aux){
 				}
 			}
 		}
-	}
-	for(let i = 0; i<3; i++){
-		if(aux[i]===aux[i+1]){
-			aux[i] += aux[i+1];
-			if(aux[i]>maxValue){
-				maxValue = aux[i];
-			}
-			aux[i+1]=0;
-		}
-	}
-	for(let i = 0; i<3; i++){
-		if(aux[i]===0){
-			for (let j = i+1; j<4; j++){
-				if(aux[j]!==0){
-					aux[i]=aux[j];
-					aux[j]=0;
-					j=4;
-				}
-			}
-		}
-	}
+	};
+	
 }
 
 function downRight(aux){
+	for(let i = 3; i>0 ; i--){
+		if(aux[i]!==0){
+			for(let j = i-1; j>=0; j--){
+				if(aux[j]!==0){
+					if(aux[i]===aux[j]){
+						aux[i] += aux[j];
+						if(aux[i] > maxValue){
+							maxValue = aux[i];
+						}
+						aux[j] = 0;
+						j = -1;
+					}
+				}
+			}
+		}
+	};
 	for(let i = 3; i>0; i--){
 		if(aux[i] === 0){
 			for(let j = i-1 ; j>=0 ; j--){
@@ -125,27 +138,8 @@ function downRight(aux){
 				}
 			}
 		}
-	}
-	for(let i = 3; i>0; i--){
-		if(aux[i]===aux[i-1]){
-			aux[i] += aux[i-1];
-			if(aux[i]>maxValue){
-				maxValue = aux[i];
-			}
-			aux[i-1]=0;
-		}
-	}
-	for(let i = 3; i>0; i--){
-		if(aux[i] === 0){
-			for(let j = i-1 ; j>=0 ; j--){
-				if(aux[j]!==0){
-					aux[i] = aux[j];
-					aux[j] = 0;
-					j=-1;
-				}
-			}
-		}
-	}
+	};
+	
 }
 
 function copyBoardRows(){
