@@ -3,7 +3,14 @@ let game = document.querySelector("body");
 let randomValues = [2,4];
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let randomPosition;
-let gameOver = document.querySelector("#gameOver");
+let gameEnd = document.querySelector("#gameEnd");
+let aux1 =[];
+let aux2 =[];
+let aux3 =[];
+let aux4 =[];	
+let copyBoard = [];
+let maxValue = 0;
+let winner = false;	
 
 function arraysAreIdentical(arr1, arr2){
     if (arr1.length !== arr2.length) return false;
@@ -45,6 +52,34 @@ function newPlay(){
 	board[hasardPosition()] = hasardValue();	
 }
 
+function fillRows(){
+	for(let i = 0; i < 16; i++){
+			if(i < 4 ){
+				aux1.push(board[i]);
+			}else if(i < 8 ){
+				aux2.push(board[i]);
+			}else if(i < 12 ){
+				aux3.push(board[i]);
+			}else{
+				aux4.push(board[i]);
+			}  
+		}		
+}
+
+function fillColumns(){
+	for(let i = 0; i<16; i++){
+		if(i % 4 === 0 ){
+			aux1.push(board[i]);
+		}else if(i % 4 === 1 ){
+			aux2.push(board[i]);
+		}else if(i % 4 === 2 ){
+			aux3.push(board[i]);
+		}else{
+			aux4.push(board[i]);
+		}  
+	}		
+}
+
 function upLeft (aux){
 	for(let i = 0; i<3; i++){
 		if(aux[i]===0){
@@ -60,6 +95,9 @@ function upLeft (aux){
 	for(let i = 0; i<3; i++){
 		if(aux[i]===aux[i+1]){
 			aux[i] += aux[i+1];
+			if(aux[i]>maxValue){
+				maxValue = aux[i];
+			}
 			aux[i+1]=0;
 		}
 	}
@@ -91,6 +129,9 @@ function downRight(aux){
 	for(let i = 3; i>0; i--){
 		if(aux[i]===aux[i-1]){
 			aux[i] += aux[i-1];
+			if(aux[i]>maxValue){
+				maxValue = aux[i];
+			}
 			aux[i-1]=0;
 		}
 	}
@@ -107,12 +148,41 @@ function downRight(aux){
 	}
 }
 
+function copyBoardRows(){
+	for(let val of aux1){
+		copyBoard.push(val);
+	};
+	for(let val of aux2){
+		copyBoard.push(val);
+	};
+	for(let val of aux3){
+		copyBoard.push(val);
+	};
+	for(let val of aux4){
+		copyBoard.push(val);
+	};
+}
+
+function copyBoardColumns(){
+	for(let i = 0; i<4; i++){
+		copyBoard.push(aux1[i]);
+		copyBoard.push(aux2[i]);
+		copyBoard.push(aux3[i]);
+		copyBoard.push(aux4[i]);
+	}	
+}
+
 
 newPlay();
 newPlay();
 fillBoard();
 
 game.addEventListener( "keyup", evt=> {
+	aux1 = [];
+	aux2 = [];
+	aux3 = [];
+	aux4 = [];
+	copyBoard = [];
 	if(board.indexOf(0) == -1){
 		let nextPositionEqual = false;
 		for(let i = 0; i < 12; i++){
@@ -120,7 +190,7 @@ game.addEventListener( "keyup", evt=> {
 				nextPositionEqual = true;
 				i = 12;
 			}
-		}
+		};
 		if(!nextPositionEqual){
 			for(let i = 0; i < 16; i++){
 				if((board[i]===board[i+1]) && ((i % 4)!==3)){
@@ -128,152 +198,64 @@ game.addEventListener( "keyup", evt=> {
 					i = 16;
 				}
 			}
-		}
+		};
 		if(!nextPositionEqual){
-			gameOver.innerHTML="Game Over";
+			if(!winner){
+				gameEnd.innerHTML="Game Over";
+			} else {
+				gameEnd.innerHTML="No more moves";
+			}
+			
 			return;
-		}
-	}
-	let aux1 =[];
-	let aux2 =[];
-	let aux3 =[];
-	let aux4 =[];	
-	let copyBoard = [];	
+		};
+	};
+
 	if(evt.key === "ArrowUp"){
-		for(let i = 0; i<16; i++){
-			if(i % 4 === 0 ){
-				aux1.push(board[i]);
-			}else if(i % 4 === 1 ){
-				aux2.push(board[i]);
-			}else if(i % 4 === 2 ){
-				aux3.push(board[i]);
-			}else{
-				aux4.push(board[i]);
-			}  
-		}		
+		fillColumns();
 		upLeft(aux1);
 		upLeft(aux2);
 		upLeft(aux3);
 		upLeft(aux4);
-
-		for(let i = 0; i<4; i++){
-			copyBoard.push(aux1[i]);
-			copyBoard.push(aux2[i]);
-			copyBoard.push(aux3[i]);
-			copyBoard.push(aux4[i]);
-		}		
-		if(!arraysAreIdentical(board, copyBoard)){			
-			for(let i = 0; i<16; i++){
-				board[i]=copyBoard[i];
-			}
-			newPlay();
-			fillBoard();			
-		}	
-		
-
+		copyBoardColumns();	
 	};
+
 	if(evt.key === "ArrowDown"){
-		for(let i = 0; i<16; i++){
-			if(i % 4 === 0 ){
-				aux1.push(board[i]);
-			}else if(i % 4 === 1 ){
-				aux2.push(board[i]);
-			}else if(i % 4 === 2 ){
-				aux3.push(board[i]);
-			}else{
-				aux4.push(board[i]);
-			}  
-		}		
+		fillColumns();
 		downRight(aux1);
 		downRight(aux2);
 		downRight(aux3);
 		downRight(aux4);
+		copyBoardColumns();		
+	};
 
-		for(let i = 0; i<4; i++){
-			copyBoard.push(aux1[i]);
-			copyBoard.push(aux2[i]);
-			copyBoard.push(aux3[i]);
-			copyBoard.push(aux4[i]);
-		}		
-		if(!arraysAreIdentical(board, copyBoard)){			
-			for(let i = 0; i<16; i++){
-				board[i]=copyBoard[i];
-			}
-			newPlay();
-			fillBoard();			
-		}
-	};
 	if(evt.key === "ArrowRight"){
-		for(let i = 0; i < 16; i++){
-			if(i < 4 ){
-				aux1.push(board[i]);
-			}else if(i < 8 ){
-				aux2.push(board[i]);
-			}else if(i < 12 ){
-				aux3.push(board[i]);
-			}else{
-				aux4.push(board[i]);
-			}  
-		}		
+		fillRows();
 		downRight(aux1);
 		downRight(aux2);
 		downRight(aux3);
 		downRight(aux4);
-		for(let val of aux1){
-			copyBoard.push(val);
-		};
-		for(let val of aux2){
-			copyBoard.push(val);
-		};
-		for(let val of aux3){
-			copyBoard.push(val);
-		};
-		for(let val of aux4){
-			copyBoard.push(val);
-		};
-		if(!arraysAreIdentical(board, copyBoard)){			
-			for(let i = 0; i<16; i++){
-				board[i]=copyBoard[i];
-			}
-			newPlay();
-			fillBoard();			
-		};
+		copyBoardRows();		
 	};
+
 	if(evt.key === "ArrowLeft"){
-		for(let i = 0; i < 16; i++){
-			if(i < 4 ){
-				aux1.push(board[i]);
-			}else if(i < 8 ){
-				aux2.push(board[i]);
-			}else if(i < 12 ){
-				aux3.push(board[i]);
-			}else{
-				aux4.push(board[i]);
-			}  
-		}		
+		fillRows();
 		upLeft(aux1);
 		upLeft(aux2);
 		upLeft(aux3);
 		upLeft(aux4);
-		for(let val of aux1){
-			copyBoard.push(val);
-		};
-		for(let val of aux2){
-			copyBoard.push(val);
-		};
-		for(let val of aux3){
-			copyBoard.push(val);
-		};
-		for(let val of aux4){
-			copyBoard.push(val);
-		};
-		if(!arraysAreIdentical(board, copyBoard)){			
-			for(let i = 0; i<16; i++){
-				board[i]=copyBoard[i];
-			}
-			newPlay();
-			fillBoard();			
-		};
+		copyBoardRows();		
+		
 	};
 
+	if(maxValue === 2048){
+		gameEnd.innerHTML="Winner!!!";
+		winner = true;		
+	}
+	if(!arraysAreIdentical(board, copyBoard)){			
+		for(let i = 0; i<16; i++){
+			board[i]=copyBoard[i];
+		}
+		newPlay();
+		fillBoard();			
+	}
 });
