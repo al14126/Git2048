@@ -92,6 +92,8 @@ function upLeft (aux){
 						}
 						aux[j] = 0;
 						j = 4;
+					} else {
+						j = 4;
 					}
 				}
 			}
@@ -122,6 +124,8 @@ function downRight(aux){
 							maxValue = aux[i];
 						}
 						aux[j] = 0;
+						j = -1;
+					} else {
 						j = -1;
 					}
 				}
