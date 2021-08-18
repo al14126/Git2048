@@ -94,7 +94,7 @@ function addClass(number, position){
 				cells[position].classList.add('class2048');
 				break;
 		default:
-			cells[position].classList.add('class>2048');		
+			cells[position].classList.add('classBigger2048');		
 			
 			
 	} 
