@@ -12,7 +12,8 @@ body{
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "microsoft yahei";  
+  font-family: "microsoft yahei";
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#627084+0,4d545b+36,182024+100 */
   background: #627084; /* Old browsers */
   background: -moz-linear-gradient(top,  #627084 0%, #4d545b 36%, #182024 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top,  #627084 0%,#4d545b 36%,#182024 100%); /* Chrome10-25,Safari5.1-6 */
@@ -24,6 +25,7 @@ body{
 h1{
   margin-top: 0;
   color: darkgray;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#b88c12+0,92710c+100 */
   background: #b88c12; /* Old browsers */
   background: -moz-linear-gradient(top,  #b88c12 0%, #92710c 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top,  #b88c12 0%,#92710c 100%); /* Chrome10-25,Safari5.1-6 */
@@ -44,21 +46,22 @@ p{
   color: #c49e78;
   font-family: "microsoft yahei";
   font-weight: bold;
-  font-size: 30px;
-  text-align: center;
+    font-size: 30px;
+    text-align: center;
 }
 
 h2{
   color: #c49e78;
   font-family: "microsoft yahei";
   font-weight: bold;
-    font-size: 30px;
-    text-align: center;
+  font-size: 30px;
+  text-align: center;
 }
 
-#score, #move{
-  color: white;
+#score, #move {
+color: white;
 }
+
 #addScore{
   color: red;
   font-size: 20px;
@@ -73,7 +76,8 @@ h2{
   display: block;
   background: #c99912;
   margin: 0 auto;
-  padding: 10px; 
+  padding: 10px;
+  /*border: 1px solid #eee;*/
   z-index: 1;
   width: 449px;
 }
@@ -93,7 +97,8 @@ h2{
   text-align: center;
   font-weight: bolder;
   font-size: 30px;
-  color: gray;  
+  color: gray;
+  /*border-radius: 3px;*/
   background: white;
 }
 
@@ -194,22 +199,120 @@ h2{
   transition:all .2s ease;   -ms-transition:all .2s ease; -moz-transition:all .2s ease; -o-transition:all .2s ease; -webkit-transition:all .2s ease;
 }
 
+#newGame, #undo {
+  display: block;
+  margin: 20px auto; 
+  position: relative;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#b88c12+0,92710c+100 */
+  background: #b88c12; /* Old browsers */
+  background: -moz-linear-gradient(top,  #b88c12 0%, #92710c 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #b88c12 0%,#92710c 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #b88c12 0%,#92710c 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b88c12', endColorstr='#92710c',GradientType=0 ); /* IE6-9 */
+  font-family: "microsoft yahei";
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFFFFF;
+  width: 150px;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#newGame:hover {    
+  transition: color 1s;					/*Transition en CSS3 pour changer doucement la couleur du texte au survol...*/  
+  color: red;							/*... de la souris*/
+}
+
+#undo {
+  background: #c49e78;
+  color: gray;
+}
+
+#undo:hover {    
+  transition: color 1s;					/*Transition en CSS3 pour changer doucement la couleur du texte au survol...*/  
+  color: red;							/*... de la souris*/
+}
+    
+#newGame:after, #undo:after {
+  content: "";
+  background: #f1f1f1;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s;
+  color: white;
+}
+
+#newGame:active:after, #undo:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
 h3{
- padding-top: 10px;
- color: #c49e78;
+  padding-top: 10px;
+  color: #c49e78;
   font-family: "microsoft yahei";
   font-weight: bold;
   font-size: 50px;
   text-align: center;
   animation-duration: .8s;
- animation-name: clignoter;
- animation-iteration-count: infinite;
- transition: none;
+  animation-name: clignoter;
+  animation-iteration-count: infinite;
+  transition: none;
 }
 
 @keyframes clignoter {
-  0%   { opacity:1; }
-  40%   {opacity:0; }
-  100% { opacity:1; }
+0%   { opacity:1; }
+40%   {opacity:0; }
+100% { opacity:1; }
 }
 
+#undo {/*dent around button*/
+  display: block;
+  margin: 20px auto;
+  position: relative;
+  text-decoration: none;
+  color: gray;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  background: #c99912;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.08);
+}
+#undo .fa {/*Button itself*/
+  position: absolute;
+  content: '';
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  text-align: center; 
+  left: 10px;
+  top: 9px;
+  border-radius: 50%;
+  font-size: 30px;
+  background-image: -webkit-linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+  background-image: linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+  border-bottom: solid 2px #b5b5b5;
+  background: white;
+}
+
+#undo .fa:active{
+  background-image: -webkit-linear-gradient(#efefef 0%, #d6d6d6 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+  border-bottom: solid 2px #d8d8d8;
+  color: gray;
+}
