@@ -59,6 +59,21 @@ h2{
 #score, #move{
   color: white;
 }
+#addScore{
+  color: red;
+  font-size: 20px;
+  margin-left: 5px;
+  margin-right: 10px;
+  animation-duration: .8s;
+  animation-name: clignote; 
+  animation-iteration-count:infinite; 
+}
+
+@keyframes clignote {
+  0%   { opacity:1; }
+  40%   {opacity:0; }
+  100% { opacity:1; }
+}
 
 #game{
   display: block;

@@ -5,6 +5,7 @@ let writeScore = document.querySelector("#score");
 let writeMove = document.querySelector("#move");
 let newGame = document.querySelector("#newGame");
 let undo = document.querySelector("#undo");
+let writeAddScore = document.querySelector("#addScore");
 let randomValues = [2,4];
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let oldBoard = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -17,9 +18,11 @@ let copyBoard = [];
 let maxValue = 0;
 let winner = false;
 let score = 0;
+let addScore = 0;
 let oldScore;
 let nMoves = 0; 	
 let nMoveWinner;
+
 
 function arraysAreIdentical(arr1, arr2){
     if (arr1.length !== arr2.length){
@@ -136,12 +139,14 @@ function fillColumns(){
 }
 
 function upLeft (aux){
+	writeAddScore.innerHTML = "";
 	for(let i = 0; i<3 ; i++){
 		if(aux[i]!==0){
 			for(let j = i+1; j<4; j++){
 				if(aux[j]!==0){
 					if(aux[i]===aux[j]){
 						score += aux[j];
+						addScore = aux[j];
 						aux[i] += aux[j];
 						if(aux[i] > maxValue){
 							maxValue = aux[i];
@@ -170,12 +175,14 @@ function upLeft (aux){
 }
 
 function downRight(aux){
+	writeAddScore.innerHTML = "";
 	for(let i = 3; i>0 ; i--){
 		if(aux[i]!==0){
 			for(let j = i-1; j>=0; j--){
 				if(aux[j]!==0){
 					if(aux[i]===aux[j]){
 						score += aux[j];
+						addScore = aux[j];
 						aux[i] += aux[j];
 						if(aux[i] > maxValue){
 							maxValue = aux[i];
@@ -246,6 +253,7 @@ undo.addEventListener("click", ()=>{
 	fillBoard();	
 	score = oldScore;
 	writeScore.innerHTML = score;
+	writeAddScore.innerHTML = "-" + addScore;
 	if(!winner|| (nMoveWinner === nMoves)){
 		gameEnd.innerHTML="";
 		nMoveWinner = "";
@@ -255,6 +263,8 @@ undo.addEventListener("click", ()=>{
 	undo.disabled = true;
 });	
 game.addEventListener( "keyup", evt=> {
+	addScore=0;
+	writeAddScore.innerHTML = "";
 	aux1 = [];
 	aux2 = [];
 	aux3 = [];
@@ -331,6 +341,7 @@ game.addEventListener( "keyup", evt=> {
 		nMoves ++;		
 		writeScore.innerHTML = score;
 		writeMove.innerHTML = nMoves;
+		writeAddScore.innerHTML = "+" + addScore;
 		undo.disabled = false;			
 	}
 
