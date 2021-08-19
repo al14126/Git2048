@@ -2,8 +2,12 @@ let cells = document.querySelectorAll(".cell");
 let game = document.querySelector("body");
 let gameEnd = document.querySelector("#gameEnd");
 let writeScore = document.querySelector("#score");
+let writeMove = document.querySelector("#move");
+let newGame = document.querySelector("#newGame");
+let undo = document.querySelector("#undo");
 let randomValues = [2,4];
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let oldBoard = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let randomPosition;
 let aux1 =[];
 let aux2 =[];
@@ -12,7 +16,10 @@ let aux4 =[];
 let copyBoard = [];
 let maxValue = 0;
 let winner = false;
-let score = 0;	
+let score = 0;
+let oldScore;
+let nMoves = 0; 	
+let nMoveWinner;
 
 function arraysAreIdentical(arr1, arr2){
     if (arr1.length !== arr2.length){
@@ -219,15 +226,41 @@ function copyBoardColumns(){
 	}	
 }
 
+undo.disabled = true;
 newPlay();
 newPlay();
 fillBoard();
+newGame.addEventListener("click", ()=>{
+	board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+	newPlay();
+	newPlay();
+	fillBoard();
+	score = 0;
+	writeScore.innerHTML = score;
+	gameEnd.innerHTML="";
+});	
+undo.addEventListener("click", ()=>{
+	for(let i = 0; i<16; i++){
+		board[i]=oldBoard[i];
+	}		
+	fillBoard();	
+	score = oldScore;
+	writeScore.innerHTML = score;
+	if(!winner|| (nMoveWinner === nMoves)){
+		gameEnd.innerHTML="";
+		nMoveWinner = "";
+	} 
+	nMoves = nMoves - 1;
+	writeMove.innerHTML = nMoves;
+	undo.disabled = true;
+});	
 game.addEventListener( "keyup", evt=> {
 	aux1 = [];
 	aux2 = [];
 	aux3 = [];
 	aux4 = [];
-	copyBoard = [];	
+	copyBoard = [];
+	oldScore = score;	
 	if(board.indexOf(0) == -1){
 		let nextPositionEqual = false;
 		for(let i = 0; i < 12; i++){
@@ -284,18 +317,26 @@ game.addEventListener( "keyup", evt=> {
 		copyBoardRows();		
 	} else {
 		return;
-	}
+	}	
 	
-	if(maxValue === 2048){
-		gameEnd.innerHTML="Winner!!!";
-		winner = true;		
-	}
-	if(!arraysAreIdentical(board, copyBoard)){			
+	if(!arraysAreIdentical(board, copyBoard)){		
+		for(let i = 0; i<16; i++){
+			oldBoard[i] =board[i];
+		}				
 		for(let i = 0; i<16; i++){
 			board[i]=copyBoard[i];
-		}
-		newPlay();
+		}				
+		newPlay();		
 		fillBoard();
-		writeScore.innerHTML = score;			
+		nMoves ++;		
+		writeScore.innerHTML = score;
+		writeMove.innerHTML = nMoves;
+		undo.disabled = false;			
+	}
+
+	if(maxValue === 2048){		
+		winner = true;
+		nMoveWinner = nMoves;
+		gameEnd.innerHTML="Winner!!! at move " + nMoveWinner;		
 	}
 });

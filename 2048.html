@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title> JS</title>
+		<title>**IvAl 2048**</title>
+		<link rel = 'icon' href = '2048.ico'/>
 		<meta charset="utf-8">
 		<script src="2048.js"async></script>
 		<link rel="stylesheet" href="2048.css" />
@@ -9,7 +10,7 @@
 	<body>
 		<h1>2048</h1>
 		<p>Join the number to get 2048 tile!</p>
-		<h2>Score: <span id = "score">0</span></h2>		
+		<h2>Score: <span id = "score">0</span><span id = "addScore"></span> Move: <span id = "move">0</span></h2>		
 		  <div id="game">
 			<div>
 			  <div class = "cell"></div>
@@ -37,5 +38,7 @@
 			</div>
 		  </div>
 		  <h3 id = "gameEnd"></h3>
+		  <button id = "newGame">New Game</button>
+		  <button id = "undo">Undo ↺</button>
 	</body>
 </html>		  
