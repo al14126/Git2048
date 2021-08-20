@@ -1,14 +1,11 @@
 html{
   height: 100%;
-  -moz-user-select: none;
+  -moz-user-select: none; /* empêcher la selecction*/
   -khtml-user-select: none;
   user-select: none;
 }
 
-body{
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  user-select: none;
+body{  
   height: 100%;
   margin: 0;
   padding: 0;
@@ -18,8 +15,7 @@ body{
   background: -moz-linear-gradient(top,  #627084 0%, #4d545b 36%, #182024 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top,  #627084 0%,#4d545b 36%,#182024 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom,  #627084 0%,#4d545b 36%,#182024 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627084', endColorstr='#182024',GradientType=0 ); /* IE6-9 */
-  overflow: hidden;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627084', endColorstr='#182024',GradientType=0 ); /* IE6-9 */  
 }
 
 h1{
@@ -38,16 +34,16 @@ h1{
 }
 
 h1:hover {  
-  transition: color 1s;					/*Transition en CSS3 pour changer doucement la couleur du texte au survol...*/  
-  color: white;							/*... de la souris*/
+  transition: color 1s;					
+  color: white;							
 }
 
 p{
   color: #c49e78;
   font-family: "microsoft yahei";
   font-weight: bold;
-    font-size: 30px;
-    text-align: center;
+  font-size: 30px;
+  text-align: center;
 }
 
 h2{
@@ -76,10 +72,9 @@ color: white;
   display: block;
   background: #c99912;
   margin: 0 auto;
-  padding: 10px;
-  /*border: 1px solid #eee;*/
+  padding: 10px; 
   z-index: 1;
-  width: 449px;
+  width: 449px;     
 }
 
 #game div {
@@ -89,7 +84,7 @@ color: white;
 
 .cell {
   border: solid #c99912;
-  border-radius: 10px;
+  border-radius: 20px;
   width: 106.25px;
   height: 106.25px;
   line-height: 106.25px;
@@ -99,7 +94,7 @@ color: white;
   font-weight: bolder;
   font-size: 30px;
   color: gray;  
-  background: white;
+  background: white;  
 }
 
 .class0{
@@ -326,7 +321,7 @@ color: white;
         1px 6px 1px #919191,
         1px 7px 1px #919191,        
     1px 18px 6px rgba(16,16,16,0.4),
-    1px 22px 10px rgba(16,16,16,0.2),
+    1px 22px 10px rgba(145, 128, 128, 0.2),
     1px 25px 35px rgba(16,16,16,0.2),
     1px 30px 60px rgba(16,16,16,0.4);
 }
@@ -354,19 +349,9 @@ color: white;
   cursor: pointer;
 }
 
-#newGame:hover {    
-  transition: color 1s;					/*Transition en CSS3 pour changer doucement la couleur du texte au survol...*/  
-  color: red;							/*... de la souris*/
-}
-
-#undo {
-  background: #c49e78;
-  color: gray;
-}
-
-#undo:hover {    
-  transition: color 1s;					/*Transition en CSS3 pour changer doucement la couleur du texte au survol...*/  
-  color: red;							/*... de la souris*/
+#newGame:hover, #undo:hover {    
+  transition: color 1s;				
+  color: red;							
 }
     
 #newGame:after, #undo:after {
@@ -390,26 +375,7 @@ color: white;
   transition: 0s
 }
 
-h3{
-  padding-top: 10px;
-  color: #c49e78;
-  font-family: "microsoft yahei";
-  font-weight: bold;
-  font-size: 50px;
-  text-align: center;
-  animation-duration: .8s;
-  animation-name: clignoter;
-  animation-iteration-count: infinite;
-  transition: none;
-}
-
-@keyframes clignoter {
-0%   { opacity:1; }
-40%   {opacity:0; }
-100% { opacity:1; }
-}
-
-#undo {/*dent around button*/
+#undo {/*cercle autour du bouton*/
   display: block;
   margin: 20px auto;
   position: relative;
@@ -422,7 +388,7 @@ h3{
   background: #c99912;
   box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.08);
 }
-#undo .fa {/*Button itself*/
+#undo .fa {/*le bouton*/
   position: absolute;
   content: '';
   width: 40px;
@@ -448,3 +414,23 @@ h3{
   border-bottom: solid 2px #d8d8d8;
   color: gray;
 }
+
+h3{
+  padding-top: 10px;
+  color: #c49e78;
+  font-family: "microsoft yahei";
+  font-weight: bold;
+  font-size: 50px;
+  text-align: center;
+  animation-duration: .8s;
+  animation-name: clignoter;
+  animation-iteration-count: infinite;
+  transition: none;
+}
+
+@keyframes clignoter {
+0%   { opacity:1; }
+40%   {opacity:0; }
+100% { opacity:1; }
+}
+

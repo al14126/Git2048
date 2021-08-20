@@ -6,16 +6,15 @@ let writeMove = document.querySelector("#move");
 let newGame = document.querySelector("#newGame");
 let undo = document.querySelector("#undo");
 let writeAddScore = document.querySelector("#addScore");
-let randomValues = [2,4];
+let randomValues = [2,4]; 
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let oldBoard = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let randomPosition;
 let aux1 =[];
 let aux2 =[];
 let aux3 =[];
 let aux4 =[];	
 let copyBoard = [];
-let maxValue = 0;
+let maxValue = 0; //pour vérifier si nous avous atteint la valeur 2048
 let winner = false;
 let score = 0;
 let addScore = 0;
@@ -24,11 +23,11 @@ let nMoves = 0;
 let nMoveWinner;
 
 
-function arraysAreIdentical(arr1, arr2){
+function arraysAreIdentical(arr1, arr2){ //Vérifier si deux tableaux sont identiques
     if (arr1.length !== arr2.length){
 		return false;
 	} 
-    for (var i = 0, len = arr1.length; i < len; i++){
+    for (var i = 0; i < arr1.length; i++){
         if (arr1[i] !== arr2[i]){
             return false;
         }
@@ -36,22 +35,21 @@ function arraysAreIdentical(arr1, arr2){
     return true; 
 }
 
-function hasardPosition(){
+function hasardPosition(){ //returne une position vide du tableau au hasard 
 	let aux = [];
 	for (let i = 0; i < board.length; i++){
 		if (board[i] === 0){
 			aux.push(i);
 		}			
-	}
-	randomPosition = aux[Math.floor(Math.random() * aux.length)];
-	return randomPosition;
+	}	 
+	return aux[Math.floor(Math.random() * aux.length)];
 }
 
-function hasardValue(){
-	return randomValues[Math.floor(Math.random() * 2)]
+function hasardValue(){ //returne au hasard 2 ou 4 
+	return randomValues[Math.floor(Math.random() * 2)] 
 } 
 
-function fillBoard(){
+function fillBoard(){ //rempli le plateau de jeu (les valeurs et les différentes coleurs)
 	for (let i = 0; i < cells.length; i++){
 		cells[i].className = "cell";
 		addClass(board[i],i);
@@ -63,11 +61,11 @@ function fillBoard(){
 	}
 }
 
-function newPlay(){	
+function newPlay(){	//ajoute dans le tableau la nouvelle valeur (2 ou 4)
 	board[hasardPosition()] = hasardValue();	
 }
 
-function addClass(number, position){
+function addClass(number, position){//additionne une classe à nous cases de jeux, selon sa valeur
 	switch (number){
 		case 0:
 			cells[position].classList.add('class0');
@@ -82,14 +80,14 @@ function addClass(number, position){
 			cells[position].classList.add('class8');
 			break;	
 		case 16:
-				cells[position].classList.add('class16');
-				break;
+			cells[position].classList.add('class16');
+			break;
 		case 32: 
-				cells[position].classList.add('class32');
-				break;
+			cells[position].classList.add('class32');
+			break;
 		case 64: 
-				cells[position].classList.add('class64');
-				break;
+			cells[position].classList.add('class64');
+			break;
 		case 128:
 			cells[position].classList.add('class128');
 			break;
@@ -100,17 +98,17 @@ function addClass(number, position){
 			cells[position].classList.add('class512');
 			break;
 		case 1024:
-				cells[position].classList.add('class1024');
-				break;
+			cells[position].classList.add('class1024');
+			break;
 		case 2048: 
-				cells[position].classList.add('class2048');
-				break;
+			cells[position].classList.add('class2048');
+			break;
 		default:
 			cells[position].classList.add('classBigger2048');				
 	} 
 }
 
-function fillRows(){
+function fillRows(){ //création d'une copie de chaque ligne du tableau
 	for(let i = 0; i < 16; i++){
 			if(i < 4 ){
 				aux1.push(board[i]);
@@ -124,7 +122,7 @@ function fillRows(){
 		}		
 }
 
-function fillColumns(){
+function fillColumns(){ //création d'une copie de chaque colonne du tableau
 	for(let i = 0; i<16; i++){
 		if(i % 4 === 0 ){
 			aux1.push(board[i]);
@@ -138,9 +136,9 @@ function fillColumns(){
 	}		
 }
 
-function upLeft (aux){
+function upLeft (aux){ //résultat quand on joue vers le haut ou vers la gauche
 	writeAddScore.innerHTML = "";
-	for(let i = 0; i<3 ; i++){
+	for(let i = 0; i<3 ; i++){ 
 		if(aux[i]!==0){
 			for(let j = i+1; j<4; j++){
 				if(aux[j]!==0){
@@ -174,7 +172,7 @@ function upLeft (aux){
 	
 }
 
-function downRight(aux){
+function downRight(aux){ //résultat quand on joue vers le bas ou vers la droite
 	writeAddScore.innerHTML = "";
 	for(let i = 3; i>0 ; i--){
 		if(aux[i]!==0){
@@ -209,7 +207,7 @@ function downRight(aux){
 	}	
 }
 
-function copyBoardRows(){
+function copyBoardRows(){ //copie les nouvelles lignes dans un tableau auxiliaire (copyBoard)
 	for(let val of aux1){
 		copyBoard.push(val);
 	}
@@ -224,7 +222,7 @@ function copyBoardRows(){
 	}
 }
 
-function copyBoardColumns(){
+function copyBoardColumns(){ //copie les nouvelles colonnes dans un tableau auxiliaire (copyBoard) 
 	for(let i = 0; i<4; i++){
 		copyBoard.push(aux1[i]);
 		copyBoard.push(aux2[i]);
@@ -233,20 +231,21 @@ function copyBoardColumns(){
 	}	
 }
 
-undo.disabled = true;
-newPlay();
-newPlay();
-fillBoard();
-newGame.addEventListener("click", ()=>{
+undo.disabled = true; //désactive le button undo
+newPlay(); //tire la première valeur 
+newPlay(); //tire la deuxième valeur 
+fillBoard(); // rempli le plateau de jeu 
+newGame.addEventListener("click", ()=>{ //commence un nouveau jeu quand on click sur le button New Game
 	board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-	newPlay();
-	newPlay();
-	fillBoard();
 	score = 0;
 	writeScore.innerHTML = score;
 	gameEnd.innerHTML="";
+	undo.disabled = true;
+	newPlay();
+	newPlay();
+	fillBoard();	
 });	
-undo.addEventListener("click", ()=>{
+undo.addEventListener("click", ()=>{ //revient un mouvement en arrière
 	for(let i = 0; i<16; i++){
 		board[i]=oldBoard[i];
 	}		
@@ -271,16 +270,16 @@ game.addEventListener( "keyup", evt=> {
 	aux4 = [];
 	copyBoard = [];
 	oldScore = score;	
-	if(board.indexOf(0) == -1){
+	if(!board.indexOf(0)){ // s'il n'y a pas des cases vides dans notre plateau...
 		let nextPositionEqual = false;
-		for(let i = 0; i < 12; i++){
+		for(let i = 0; i < 12; i++){ // vérifie s'il y a deux valeurs identiques consecutives dans nos colonnes
 			if(board[i] === board[i+4]){
 				nextPositionEqual = true;
 				i = 12;
 			}
 		}
-		if(!nextPositionEqual){
-			for(let i = 0; i < 16; i++){
+		if(!nextPositionEqual){ 
+			for(let i = 0; i < 16; i++){ // vérifie s'il y a deux valeurs identiques consecutives dans nos lignes
 				if((board[i]===board[i+1]) && ((i % 4)!==3)){
 					nextPositionEqual = true;
 					i = 16;
@@ -289,36 +288,36 @@ game.addEventListener( "keyup", evt=> {
 		}
 		if(!nextPositionEqual){
 			if(!winner){
-				gameEnd.innerHTML="Game Over";
+				gameEnd.innerHTML="Game Over"; //s'il n'y a plus des mouvements possibles et le joueur n'a pas gagné
 			} else {
-				gameEnd.innerHTML="No more moves";
+				gameEnd.innerHTML="No more moves";//s'il n'y a plus des mouvements possibles et le joueur a gagné
 			}			
 			return;
 		}
 	}
 
-	if(evt.key === "ArrowUp"){
+	if(evt.key === "ArrowUp"){ //création d'une copie des colonnes de notre tableau et éxecute la function upLeft
 		fillColumns();
 		upLeft(aux1);
 		upLeft(aux2);
 		upLeft(aux3);
 		upLeft(aux4);
 		copyBoardColumns();	
-	} else if(evt.key === "ArrowDown"){
+	} else if(evt.key === "ArrowDown"){//création d'une copie des colonnes de notre tableau et éxecute la function downRight
 		fillColumns();
 		downRight(aux1);
 		downRight(aux2);
 		downRight(aux3);
 		downRight(aux4);
 		copyBoardColumns();		
-	} else if(evt.key === "ArrowRight"){
+	} else if(evt.key === "ArrowRight"){//création d'une copie des lignes de notre tableau et éxecute la function downRight
 		fillRows();
 		downRight(aux1);
 		downRight(aux2);
 		downRight(aux3);
 		downRight(aux4);
 		copyBoardRows();		
-	} else if(evt.key === "ArrowLeft"){
+	} else if(evt.key === "ArrowLeft"){//création d'une copie des lignes de notre tableau et éxecute la function upLeft
 		fillRows();
 		upLeft(aux1);
 		upLeft(aux2);
@@ -342,12 +341,11 @@ game.addEventListener( "keyup", evt=> {
 		writeScore.innerHTML = score;
 		writeMove.innerHTML = nMoves;
 		writeAddScore.innerHTML = "+" + addScore;
-		undo.disabled = false;			
-	}
-
-	if(maxValue === 2048){		
-		winner = true;
-		nMoveWinner = nMoves;
-		gameEnd.innerHTML="Winner!!! at move " + nMoveWinner;		
-	}
+		undo.disabled = false;		
+		if(maxValue === 2048){		
+			winner = true;
+			nMoveWinner = nMoves;
+			gameEnd.innerHTML="Winner!!! at move " + nMoveWinner;		
+		}
+	}	
 });
