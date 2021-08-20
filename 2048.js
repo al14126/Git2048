@@ -7,13 +7,13 @@ let newGame = document.querySelector("#newGame");
 let undo = document.querySelector("#undo");
 let writeAddScore = document.querySelector("#addScore");
 let randomValues = [2,4]; 
-let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let oldBoard = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // tableau du jeu
+let oldBoard = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //garde le tableau du mouvement antérieur, pour le bouton undo
 let aux1 =[];
 let aux2 =[];
 let aux3 =[];
 let aux4 =[];	
-let copyBoard = [];
+let copyBoard = []; 
 let maxValue = 0; //pour vérifier si nous avous atteint la valeur 2048
 let winner = false;
 let score = 0;
@@ -270,7 +270,7 @@ game.addEventListener( "keyup", evt=> {
 	aux4 = [];
 	copyBoard = [];
 	oldScore = score;	
-	if(!board.indexOf(0)){ // s'il n'y a pas des cases vides dans notre plateau...
+	if(board.indexOf(0)==-1){ // s'il n'y a pas des cases vides dans notre plateau...
 		let nextPositionEqual = false;
 		for(let i = 0; i < 12; i++){ // vérifie s'il y a deux valeurs identiques consecutives dans nos colonnes
 			if(board[i] === board[i+4]){
@@ -341,11 +341,13 @@ game.addEventListener( "keyup", evt=> {
 		writeScore.innerHTML = score;
 		writeMove.innerHTML = nMoves;
 		writeAddScore.innerHTML = "+" + addScore;
-		undo.disabled = false;		
+		undo.disabled = false;
 		if(maxValue === 2048){		
 			winner = true;
 			nMoveWinner = nMoves;
 			gameEnd.innerHTML="Winner!!! at move " + nMoveWinner;		
-		}
-	}	
+		}			
+		
+	}
+	
 });
