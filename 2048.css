@@ -1,5 +1,5 @@
 html{
-  height: 100%;
+  height: 200%;
   -moz-user-select: none; /* empêcher la selecction*/
   -khtml-user-select: none;
   user-select: none;
@@ -54,7 +54,7 @@ h2{
   text-align: center;
 }
 
-#score, #move {
+#score, #move, #time {
 color: white;
 }
 
@@ -94,7 +94,7 @@ color: white;
   font-weight: bolder;
   font-size: 30px;
   color: gray;  
-  background: white;  
+  background: white;
 }
 
 .class0{
@@ -102,7 +102,7 @@ color: white;
 }
 
 .class2{
-  background: #fff;
+  background: #ebebda;
   color:#777;
   font-size: 70px;
   transition:all .2s ease;   -ms-transition:all .2s ease; -moz-transition:all .2s ease; -o-transition:all .2s ease; -webkit-transition:all .2s ease; 
@@ -123,7 +123,7 @@ color: white;
 }
 
 .class4{
-  background: #fafafa;
+  background: #eeeab6;
   color: #e9b856;
   font-size: 70px;
   transition:all .2s ease;   -ms-transition:all .2s ease; -moz-transition:all .2s ease; -o-transition:all .2s ease; -webkit-transition:all .2s ease; 
@@ -144,7 +144,7 @@ color: white;
 }
 
 .class8{
-  background: #f3f3f3;
+  background: #d8d539;
   color:#f94e2f;
   font-size: 70px;
   transition:all .2s ease;   -ms-transition:all .2s ease; -moz-transition:all .2s ease; -o-transition:all .2s ease; -webkit-transition:all .2s ease; 
@@ -433,4 +433,3 @@ h3{
 40%   {opacity:0; }
 100% { opacity:1; }
 }
-

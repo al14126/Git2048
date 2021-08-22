@@ -6,6 +6,8 @@ let writeMove = document.querySelector("#move");
 let newGame = document.querySelector("#newGame");
 let undo = document.querySelector("#undo");
 let writeAddScore = document.querySelector("#addScore");
+let timeCount = document.querySelector("#time");
+let secondsCount = 0;
 let randomValues = [2,4]; 
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // tableau du jeu
 let oldBoard = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //garde le tableau du mouvement antérieur, pour le bouton undo
@@ -21,12 +23,23 @@ let addScore = 0;
 let oldScore;
 let nMoves = 0; 	
 let nMoveWinner;
+let t;
 
+function setTime(){
+    secondsCount ++;    
+    timeCount.innerHTML =writeTime((parseInt(secondsCount/3600))%24) + ":" + writeTime((parseInt(secondsCount/60))%60) + ":" + writeTime(secondsCount%60);
+}
 
-function arraysAreIdentical(arr1, arr2){ //Vérifier si deux tableaux sont identiques
-    if (arr1.length !== arr2.length){
-		return false;
-	} 
+function writeTime (number){
+    let numberString = number + "";
+    if (numberString.length<2){
+        return("0" + numberString);
+    } else{
+        return numberString;
+    }
+}
+
+function arraysAreIdentical(arr1, arr2){ //Vérifier si deux tableaux sont identiques    
     for (var i = 0; i < arr1.length; i++){
         if (arr1[i] !== arr2[i]){
             return false;
@@ -49,6 +62,10 @@ function hasardValue(){ //returne au hasard 2 ou 4
 	return randomValues[Math.floor(Math.random() * 2)] 
 } 
 
+function newPlay(){	//ajoute dans le tableau la nouvelle valeur (2 ou 4)
+	board[hasardPosition()] = hasardValue();	
+}
+
 function fillBoard(){ //rempli le plateau de jeu (les valeurs et les différentes coleurs)
 	for (let i = 0; i < cells.length; i++){
 		cells[i].className = "cell";
@@ -61,9 +78,6 @@ function fillBoard(){ //rempli le plateau de jeu (les valeurs et les différente
 	}
 }
 
-function newPlay(){	//ajoute dans le tableau la nouvelle valeur (2 ou 4)
-	board[hasardPosition()] = hasardValue();	
-}
 
 function addClass(number, position){//additionne une classe à nous cases de jeux, selon sa valeur
 	switch (number){
@@ -231,21 +245,29 @@ function copyBoardColumns(){ //copie les nouvelles colonnes dans un tableau auxi
 	}	
 }
 
+function startGame (){ 
+t = setInterval(setTime, 1000); //démarre le temps de jeux
 undo.disabled = true; //désactive le button undo
 newPlay(); //tire la première valeur 
 newPlay(); //tire la deuxième valeur 
 fillBoard(); // rempli le plateau de jeu 
+}
+
+startGame();
+
 newGame.addEventListener("click", ()=>{ //commence un nouveau jeu quand on click sur le button New Game
 	board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    secondsCount = 0;      
 	score = 0;
+    nMoves = 0;
+    writeMove.innerHTML = nMoves;
 	writeScore.innerHTML = score;
-	gameEnd.innerHTML="";
-	undo.disabled = true;
-	newPlay();
-	newPlay();
-	fillBoard();	
+    writeAddScore.innerHTML = "";
+	gameEnd.innerHTML="";    
+	startGame();	
 });	
-undo.addEventListener("click", ()=>{ //revient un mouvement en arrière
+
+undo.addEventListener("click", ()=>{ //revient un mouvement en arrière    
 	for(let i = 0; i<16; i++){
 		board[i]=oldBoard[i];
 	}		
@@ -253,14 +275,15 @@ undo.addEventListener("click", ()=>{ //revient un mouvement en arrière
 	score = oldScore;
 	writeScore.innerHTML = score;
 	writeAddScore.innerHTML = "-" + addScore;
-	if(!winner|| (nMoveWinner === nMoves)){
+	if(!winner || (nMoveWinner === nMoves)){
 		gameEnd.innerHTML="";
-		nMoveWinner = "";
+		nMoveWinner = 0;
 	} 
 	nMoves = nMoves - 1;
 	writeMove.innerHTML = nMoves;
 	undo.disabled = true;
 });	
+
 game.addEventListener( "keyup", evt=> {
 	addScore=0;
 	writeAddScore.innerHTML = "";
@@ -289,6 +312,8 @@ game.addEventListener( "keyup", evt=> {
 		if(!nextPositionEqual){
 			if(!winner){
 				gameEnd.innerHTML="Game Over"; //s'il n'y a plus des mouvements possibles et le joueur n'a pas gagné
+                undo.disabled = true;
+                clearInterval(t);
 			} else {
 				gameEnd.innerHTML="No more moves";//s'il n'y a plus des mouvements possibles et le joueur a gagné
 			}			
@@ -338,7 +363,7 @@ game.addEventListener( "keyup", evt=> {
 		newPlay();		
 		fillBoard();
 		nMoves ++;		
-		writeScore.innerHTML = score;
+		writeScore.innerHTML = score;        
 		writeMove.innerHTML = nMoves;
 		writeAddScore.innerHTML = "+" + addScore;
 		undo.disabled = false;
@@ -346,8 +371,7 @@ game.addEventListener( "keyup", evt=> {
 			winner = true;
 			nMoveWinner = nMoves;
 			gameEnd.innerHTML="Winner!!! at move " + nMoveWinner;		
-		}			
-		
+		}		
 	}
 	
 });
