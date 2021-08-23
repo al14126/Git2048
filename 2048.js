@@ -23,6 +23,7 @@ let addScore = 0;
 let oldScore;
 let nMoves = 0; 	
 let nMoveWinner;
+let moveWinner = false;
 let t;
 
 function setTime(){
@@ -151,23 +152,21 @@ function fillColumns(){ //création d'une copie de chaque colonne du tableau
 }
 
 function upLeft (aux){ //résultat quand on joue vers le haut ou vers la gauche
-	writeAddScore.innerHTML = "";
+	writeAddScore.innerHTML = "";	
 	for(let i = 0; i<3 ; i++){ 
 		if(aux[i]!==0){
 			for(let j = i+1; j<4; j++){
 				if(aux[j]!==0){
 					if(aux[i]===aux[j]){
-						score += aux[j];
-						addScore = aux[j];
+						score += 2*aux[j];
+						addScore += 2*aux[j];
 						aux[i] += aux[j];
 						if(aux[i] > maxValue){
 							maxValue = aux[i];
 						}
-						aux[j] = 0;
-						j = 4;
-					} else {
-						j = 4;
+						aux[j] = 0;						
 					}
+					break;					
 				}
 			}
 		}
@@ -178,23 +177,22 @@ function upLeft (aux){ //résultat quand on joue vers le haut ou vers la gauche
 				if(aux[j]!==0){
 					aux[i]=aux[j];
 					aux[j]=0;
-					j=4;
+					break;
 				}
 			}
 		}
-	}
-	
+	}	
 }
 
-function downRight(aux){ //résultat quand on joue vers le bas ou vers la droite
+function downRight(aux){ //résultat quand on joue vers le bas ou vers la droite	
 	writeAddScore.innerHTML = "";
 	for(let i = 3; i>0 ; i--){
 		if(aux[i]!==0){
 			for(let j = i-1; j>=0; j--){
 				if(aux[j]!==0){
 					if(aux[i]===aux[j]){
-						score += aux[j];
-						addScore = aux[j];
+						score += 2*aux[j];
+						addScore += 2*aux[j];
 						aux[i] += aux[j];
 						if(aux[i] > maxValue){
 							maxValue = aux[i];
@@ -256,15 +254,17 @@ fillBoard(); // rempli le plateau de jeu
 startGame();
 
 newGame.addEventListener("click", ()=>{ //commence un nouveau jeu quand on click sur le button New Game
-	board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+	/*board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     secondsCount = 0;      
 	score = 0;
     nMoves = 0;
+	addScore = 0;
     writeMove.innerHTML = nMoves;
 	writeScore.innerHTML = score;
     writeAddScore.innerHTML = "";
-	gameEnd.innerHTML="";    
-	startGame();	
+	gameEnd.innerHTML=""; 	   
+	startGame();*/
+	window.location.reload();	
 });	
 
 undo.addEventListener("click", ()=>{ //revient un mouvement en arrière    
@@ -369,8 +369,11 @@ game.addEventListener( "keyup", evt=> {
 		undo.disabled = false;
 		if(maxValue === 2048){		
 			winner = true;
-			nMoveWinner = nMoves;
-			gameEnd.innerHTML="Winner!!! at move " + nMoveWinner;		
+			if (!moveWinner){
+				moveWinner = true;
+				nMoveWinner = nMoves;
+			}			
+			gameEnd.innerHTML="Winner!!! At move " + nMoveWinner;		
 		}		
 	}
 	
