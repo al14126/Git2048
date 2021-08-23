@@ -8,7 +8,7 @@ let undo = document.querySelector("#undo");
 let writeAddScore = document.querySelector("#addScore");
 let timeCount = document.querySelector("#time");
 let secondsCount = 0;
-let randomValues = [2,4]; 
+let randomValues = [2,2,2,2,4]; 
 let board = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // tableau du jeu
 let oldBoard = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //garde le tableau du mouvement antérieur, pour le bouton undo
 let aux1 =[];
@@ -60,7 +60,7 @@ function hasardPosition(){ //returne une position vide du tableau au hasard
 }
 
 function hasardValue(){ //returne au hasard 2 ou 4 
-	return randomValues[Math.floor(Math.random() * 2)] 
+	return randomValues[Math.floor(Math.random() * 5)] 
 } 
 
 function newPlay(){	//ajoute dans le tableau la nouvelle valeur (2 ou 4)
